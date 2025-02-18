@@ -44,11 +44,19 @@ const Register = () => {
 
   return (
     <div className="auth-container">
+      <div className="absolute top-8 left-1/2 -translate-x-1/2">
+        <h1 className="text-4xl font-bold text-primary tracking-tight">
+          DocPatient
+        </h1>
+        <p className="text-muted-foreground text-center mt-1">
+          Your Healthcare Connection
+        </p>
+      </div>
       <Card className="auth-card">
         <CardHeader className="space-y-1">
-          <CardTitle className="auth-title">Create an account</CardTitle>
+          <CardTitle className="auth-title">Create your account</CardTitle>
           <CardDescription className="auth-subtitle">
-            Choose your account type and register
+            Join DocPatient as a patient or healthcare provider
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -58,18 +66,24 @@ const Register = () => {
                 <Button
                   type="button"
                   variant={userType === "patient" ? "default" : "outline"}
-                  className="w-full"
+                  className="w-full relative overflow-hidden group"
                   onClick={() => setUserType("patient")}
                 >
-                  Patient
+                  <span className="relative z-10">Patient</span>
+                  {userType === "patient" && (
+                    <div className="absolute inset-0 bg-primary/10 animate-pulse" />
+                  )}
                 </Button>
                 <Button
                   type="button"
                   variant={userType === "doctor" ? "default" : "outline"}
-                  className="w-full"
+                  className="w-full relative overflow-hidden group"
                   onClick={() => setUserType("doctor")}
                 >
-                  Doctor
+                  <span className="relative z-10">Doctor</span>
+                  {userType === "doctor" && (
+                    <div className="absolute inset-0 bg-primary/10 animate-pulse" />
+                  )}
                 </Button>
               </div>
               <div className="space-y-2">
@@ -79,6 +93,7 @@ const Register = () => {
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={handleChange}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <div className="space-y-2">
@@ -89,6 +104,7 @@ const Register = () => {
                   placeholder="name@example.com"
                   value={formData.email}
                   onChange={handleChange}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <div className="space-y-2">
@@ -98,6 +114,7 @@ const Register = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <div className="space-y-2">
@@ -107,17 +124,21 @@ const Register = () => {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button 
+              type="submit" 
+              className="w-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            >
               Create account
             </Button>
             <div className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-primary hover:underline font-medium"
+                className="text-primary hover:underline font-medium transition-colors"
               >
                 Sign in
               </Link>
