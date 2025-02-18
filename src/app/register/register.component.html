@@ -1,0 +1,107 @@
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-blue-100 relative">
+  <div class="absolute top-8 left-1/2 -translate-x-1/2">
+    <h1 class="text-4xl font-bold text-cyan-500 tracking-tight">
+      DocPatient
+    </h1>
+    <p class="text-gray-500 text-center mt-1">
+      Your Healthcare Connection
+    </p>
+  </div>
+
+  <div class="w-full max-w-md p-8 bg-white/80 rounded-2xl shadow-lg border border-gray-200 backdrop-blur-sm animate-fadeIn">
+    <div class="space-y-1 mb-8">
+      <h2 class="text-3xl font-semibold text-center mb-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">
+        Create your account
+      </h2>
+      <p class="text-sm text-center text-gray-500">
+        Join DocPatient as a patient or healthcare provider
+      </p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            [class]="userType === 'patient' ? 'btn-primary' : 'btn-outline'"
+            class="w-full relative overflow-hidden group"
+            (click)="setUserType('patient')"
+          >
+            <span class="relative z-10">Patient</span>
+            <div *ngIf="userType === 'patient'" class="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
+          </button>
+          <button
+            type="button"
+            [class]="userType === 'doctor' ? 'btn-primary' : 'btn-outline'"
+            class="w-full relative overflow-hidden group"
+            (click)="setUserType('doctor')"
+          >
+            <span class="relative z-10">Doctor</span>
+            <div *ngIf="userType === 'doctor'" class="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
+          </button>
+        </div>
+
+        <div class="space-y-2">
+          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+          <input
+            id="name"
+            formControlName="name"
+            type="text"
+            placeholder="John Doe"
+            class="input-field"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            placeholder="name@example.com"
+            class="input-field"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            class="input-field"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            type="password"
+            class="input-field"
+          />
+        </div>
+      </div>
+
+      <button 
+        type="submit"
+        [disabled]="!registerForm.valid"
+        class="w-full btn-primary transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Create account
+      </button>
+
+      <div class="text-center text-sm text-gray-500">
+        Already have an account?
+        <a
+          routerLink="/login"
+          class="text-cyan-500 hover:underline font-medium transition-colors ml-1"
+        >
+          Sign in
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
