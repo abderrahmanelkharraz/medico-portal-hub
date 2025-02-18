@@ -1,11 +1,28 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { toast } from "sonner";
 
 const DoctorDashboard = () => {
   const navigate = useNavigate();
+  const [profileData, setProfileData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    specialization: "",
+    licenseNumber: "",
+    hospitalAffiliation: "",
+  });
 
   useEffect(() => {
     const isAuth = localStorage.getItem("isAuthenticated");
@@ -18,6 +35,19 @@ const DoctorDashboard = () => {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
+  };
+
+  const handleProfileUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, send update to backend
+    toast.success("Profile updated successfully!");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -63,6 +93,87 @@ const DoctorDashboard = () => {
             </CardContent>
           </Card>
         </div>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Update Profile</CardTitle>
+            <CardDescription>
+              Keep your professional information up to date
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleProfileUpdate} className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={profileData.name}
+                    onChange={handleInputChange}
+                    placeholder="Dr. John Doe"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={profileData.email}
+                    onChange={handleInputChange}
+                    placeholder="doctor@example.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    value={profileData.phone}
+                    onChange={handleInputChange}
+                    placeholder="+1 234 567 890"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="specialization">Specialization</Label>
+                  <Input
+                    id="specialization"
+                    name="specialization"
+                    value={profileData.specialization}
+                    onChange={handleInputChange}
+                    placeholder="Cardiology"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="licenseNumber">License Number</Label>
+                  <Input
+                    id="licenseNumber"
+                    name="licenseNumber"
+                    value={profileData.licenseNumber}
+                    onChange={handleInputChange}
+                    placeholder="MD123456"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="hospitalAffiliation">
+                    Hospital Affiliation
+                  </Label>
+                  <Input
+                    id="hospitalAffiliation"
+                    name="hospitalAffiliation"
+                    value={profileData.hospitalAffiliation}
+                    onChange={handleInputChange}
+                    placeholder="City General Hospital"
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full md:w-auto">
+                Update Profile
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
